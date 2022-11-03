@@ -22,15 +22,62 @@ int main(int argc, char const* argv[]) {
 
   ListNode* list1 = createLinkedList(v1);
   ListNode* list2 = createLinkedList(v2);
+  ListNode *rlist1, *rlist2;  // reverse of list1 and list2
 
   printLinkedList(list1);
   printLinkedList(list2);
+
+  rlist1 = reverseList(list1);
+  rlist2 = reverseList(list2);
+
+  printLinkedList(rlist1);
+  printLinkedList(rlist2);
+
   return 0;
 }
 
+// Reverses a linked list
 ListNode* reverseList(ListNode* head) {
-  vector<ListNode*> addresses;
-  return head;
+  ListNode* node = head;                        // used to traverse linked list
+  ListNode* secondLastNode;                     // second last node of original linked list
+  ListNode *reverseListHead, *reverseListTail;  // head and tail of reversed linked list
+
+  if (head == nullptr)
+    return head;
+
+  // create a temporary node
+  reverseListHead = new ListNode(0);
+  // reverse list's last node is also the head as there is only one node in the list
+  reverseListTail = reverseListHead;
+
+  while (head->next != nullptr) {
+    node = head;
+    // iterate through original linked list
+    while (node->next != nullptr) {
+      // get second last node of list
+      secondLastNode = node;
+      // get tail node of list
+      node = node->next;
+    }
+    // add tail node to back reverse list
+    reverseListTail->next = node;
+    // set the tail node of reverse list
+    reverseListTail = node;
+    reverseListTail->next = nullptr;
+    // remove reference to tail
+    secondLastNode->next = nullptr;
+  }
+  // remove the temporary node created above from the head of the reversed list
+  node = reverseListHead;
+  reverseListHead = reverseListHead->next;
+  delete (node);
+  // add the head of original list to the reversed list
+  reverseListTail->next = head;
+
+  // printLinkedList(reverseListHead);
+  // cout << "secondLastNode: " << secondLastNode->val << endl;
+
+  return reverseListHead;
 }
 
 // Create Linked list given a vector of int values
