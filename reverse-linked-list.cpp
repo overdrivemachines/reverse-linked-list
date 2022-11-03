@@ -42,7 +42,7 @@ ListNode* reverseList(ListNode* head) {
   ListNode* secondLastNode;                     // second last node of original linked list
   ListNode *reverseListHead, *reverseListTail;  // head and tail of reversed linked list
 
-  if (head == nullptr)
+  if ((head == nullptr) || (head->next == nullptr))
     return head;
 
   // create a temporary node
