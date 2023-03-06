@@ -37,7 +37,7 @@ int main(int argc, char const* argv[]) {
 }
 
 // Reverses a linked list
-ListNode* reverseList(ListNode* head) {
+ListNode* reverseList_old(ListNode* head) {
   ListNode* node = head;                        // used to traverse linked list
   ListNode* secondLastNode;                     // second last node of original linked list
   ListNode *reverseListHead, *reverseListTail;  // head and tail of reversed linked list
@@ -78,6 +78,28 @@ ListNode* reverseList(ListNode* head) {
   // cout << "secondLastNode: " << secondLastNode->val << endl;
 
   return reverseListHead;
+}
+
+// Optimized solution
+ListNode* reverseList(ListNode* head) {
+  if (head == NULL)
+    return NULL;
+  if (head->next == NULL)
+    return head;
+
+  ListNode* old_head;
+  ListNode* node = head->next;
+  ListNode* next_node;
+  ListNode* org_head = head;
+  while (node != NULL) {
+    next_node = node->next;
+    old_head = head;
+    head = node;
+    head->next = old_head;
+    node = next_node;
+  }
+  org_head->next = NULL;
+  return head;
 }
 
 // Create Linked list given a vector of int values
